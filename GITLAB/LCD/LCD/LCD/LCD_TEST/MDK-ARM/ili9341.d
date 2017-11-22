@@ -1,0 +1,10 @@
+.\ili9341.o: ..\Drivers\BSP\Components\ili9341\ili9341.c
+.\ili9341.o: ..\Drivers\BSP\Components\ili9341\ili9341.h
+.\ili9341.o: ..\Drivers\BSP\Components\ili9341\../Common/lcd.h
+.\ili9341.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\ili9341.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/../../../Utilities/Fonts/fonts.h
+.\ili9341.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/../../../Utilities/Fonts/font24.c
+.\ili9341.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/../../../Utilities/Fonts/font20.c
+.\ili9341.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/../../../Utilities/Fonts/font16.c
+.\ili9341.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/../../../Utilities/Fonts/font12.c
+.\ili9341.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/../../../Utilities/Fonts/font8.c

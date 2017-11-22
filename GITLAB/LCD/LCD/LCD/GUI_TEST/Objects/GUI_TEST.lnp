@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp
+".\objects\main.o"
+".\objects\stm32f4xx_it.o"
+".\objects\disp.o"
+".\objects\ili9341.o"
+".\objects\stm32f429i_discovery.o"
+".\objects\misc.o"
+".\objects\led_f429discovery.o"
+".\objects\spi_stm32f4xx.o"
+".\objects\stm32f4xx_hal.o"
+".\objects\stm32f4xx_hal_cortex.o"
+".\objects\stm32f4xx_hal_dma.o"
+".\objects\stm32f4xx_hal_dma2d.o"
+".\objects\stm32f4xx_hal_dma_ex.o"
+".\objects\stm32f4xx_hal_gpio.o"
+".\objects\stm32f4xx_hal_ltdc.o"
+".\objects\stm32f4xx_hal_pwr.o"
+".\objects\stm32f4xx_hal_pwr_ex.o"
+".\objects\stm32f4xx_hal_rcc.o"
+".\objects\stm32f4xx_hal_rcc_ex.o"
+".\objects\stm32f4xx_hal_spi.o"
+".\objects\stm32f4xx_hal_msp.o"
+".\objects\startup_stm32f429xx.o"
+".\objects\system_stm32f4xx.o"
+--library_type=microlib --strict --scatter ".\Objects\GUI_TEST.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\GUI_TEST.map" -o .\Objects\GUI_TEST.axf
