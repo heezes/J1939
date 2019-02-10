@@ -9,7 +9,7 @@
 
 J19139_PduTypeDef J1939_PDU;
 
-#define TRANSMITTER	1
+#define TRANSMITTER	0
 
 void App_Init(void)
 {
@@ -29,11 +29,11 @@ void App_Process(void)
 	J1939_PDU.PGN.edp_dp	= 0;
 	J1939_PDU.PGN.pf 		= 220;
 	J1939_PDU.PGN.ps		= 20;
-	J1939_PDU.dlc 			= 3;
+	J1939_PDU.dlc 			= 8;
 	J1939_PDU.priority		= 7;
 	J1939_PDU.sa			= 19;
 	for(int i = 0; i<J1939_PDU.dlc; i++)
-		J1939_PDU.data[i]	= i;
+		J1939_PDU.data[i]	= i+2;
 	if(PackFrame(&J1939_PDU) == J1939_ERROR)
 		print_string("Can Transmission Error\r\n");
 	else
@@ -49,7 +49,9 @@ void App_Process(void)
 	if(ret == J1939_ERROR)
 		print_string("Can Receive Error\r\n");
 	else if(ret == J1939_TIMEOUT)
-		printf("Timeout\r\n");
+	{
+		print_string("Timeout\r\n");
+	}
 	else
 	{
 		print_string("PDU PGN: %d\r\n",J1939_PDU.PGN.pgn);
@@ -63,6 +65,7 @@ void App_Process(void)
 		for(int i = 0; i<J1939_PDU.dlc; i++)
 			print_string("%d ", J1939_PDU.data[i]);
 		print_string("\r\n\n-----------------------------------------------------\n\r\n");
+
 	}
 #endif
 }

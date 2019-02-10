@@ -3,16 +3,16 @@
 
 #include "CAN_INTERFACE_J1939.h"
 
-typedef unsigned int PGN_T;
+typedef uint32_t PGN_T;
 
 /*PRIVATE DEFINES*/
-#define CAN_BUFFER_SIZE 	40
+#define CAN_BUFFER_SIZE 	400
 #define MAX_CAN_FRAMES 		8
 #define FRAME_HEADER		5
 
 /*Mask Defines*/
 #define PGN_MASK			0x3FFFF
-#define PRIORITY_MASK		0x1C
+#define PRIORITY_MASK		0x7
 #define EDP_MASK			0x02
 #define DP_MASK				0x01
 

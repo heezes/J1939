@@ -19,7 +19,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	uint8_t data[8];
 	if(HAL_CAN_GetRxMessage(&hcan1, CAN_FILTER_FIFO0, &RxHeader, data) == HAL_OK)
 	{
-		print_string("Data: %d,%d,%d\r\n",data[0], data[1], data[2]);
 		CAN_Receive(RxHeader.ExtId, data, (u8)RxHeader.DLC);
 	}
 }
@@ -78,9 +77,14 @@ static J1939_RTYPE CAN_Receive(u32 id, u8* data, u8 len)
 	{
 		enqueue(&CAN_QUEUE, &len);
 		for(int i = 1; i<5; i++)
-			enqueue(&CAN_QUEUE, (u8*)((id>>(i-1)*8) & 0xFF));
-		for(int i = 0; i<7; i++)
+		{
+			u8 temp = ((id>>((i-1)*8)) & 0xFF);
+			enqueue(&CAN_QUEUE, &temp);
+		}
+		for(int i = 0; i<8; i++)
+		{
 			enqueue(&CAN_QUEUE, &data[i]);
+		}
 	}
 	else
 		return J1939_ERROR;
@@ -90,9 +94,7 @@ static J1939_RTYPE CAN_Receive(u32 id, u8* data, u8 len)
 J1939_RTYPE CAN_Transmit(u32 id, u8* data, u8 len)
 {
 	CAN_TxHeaderTypeDef TxHeader;
-	id = 100;
-	TxHeader.StdId	 = id;
-	//TxHeader.ExtId 	 = id;
+	TxHeader.ExtId	 = id;
 	TxHeader.RTR 	 = CAN_RTR_DATA;
 	TxHeader.DLC 	 = len;
 	if(id > 0x7FF)
