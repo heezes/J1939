@@ -17,7 +17,7 @@ typedef int8_t  s8;
 #define NUMBER_TRANS_RX_MACHINES
 #define J1939_MAX_MESSAGE_LENGTH       1785
 #define NUMBER_TRANS_RX_BUFFERS        64
-#define NUMBER_TRANS_TX_BUFFERS        8
+#define NUMBER_TRANS_TX_BUFFERS        64
 #define NUMBER_PDU_BUFFERS             8
 #define BIG_E                          0         // 1:Big-Endian 0:Little-Endian
 #define OUT_BUFFER_SIZE                21

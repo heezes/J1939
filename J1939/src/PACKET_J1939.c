@@ -91,7 +91,11 @@ J1939_RTYPE RetrieveFrame(J19139_PduTypeDef* pkt)
 		return J1939_TIMEOUT;/*Timeout Error*/
 	pkt->priority 	= (id >> 26) & PRIORITY_MASK;
 	pkt->sa 		= (u8)(id);
-	pkt->PGN.pgn 	= (PGN_T)((id >> 8) & 0x3FFFF);
+	pkt->PGN.pf 	= (u8)(id >> 16);
+	if(pkt->PGN.pf > 240)
+		pkt->PGN.pgn 	= (PGN_T)((id >> 8) & 0x3FFFF);
+	else
+		pkt->PGN.pgn 	= (PGN_T)((id >> 8) & 0x3FF00);
 	pkt->PGN.edp_dp = (u8)(pkt->PGN.pgn >> 16) & (EDP_MASK|DP_MASK);
 	pkt->PGN.pf 	= (u8)(pkt->PGN.pgn >> 8);
 	pkt->PGN.ps 	= (u8)(pkt->PGN.pgn >> 0);

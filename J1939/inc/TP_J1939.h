@@ -84,6 +84,6 @@ typedef struct
    u8    source_addr;
    u8    dest_addr;
    u8    TP;
-} J1939_RX_STATE_MACHINE_T;
+} J1939_STATE_MACHINE_T;
 
 #endif
