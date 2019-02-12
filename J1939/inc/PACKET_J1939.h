@@ -6,7 +6,7 @@
 typedef uint32_t PGN_T;
 
 /*PRIVATE DEFINES*/
-#define CAN_BUFFER_SIZE 	400
+#define CAN_BUFFER_SIZE 	40
 #define MAX_CAN_FRAMES 		8
 #define FRAME_HEADER		5
 

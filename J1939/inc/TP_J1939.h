@@ -78,6 +78,7 @@ typedef struct
    u8    status;
    u8    packet_number;
    u8    total_packet_number;
+   u8 	 cts_count;
    u16   byte_count;
    u16   timer_counter;
    u8    source_addr;

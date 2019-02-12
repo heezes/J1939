@@ -93,7 +93,7 @@ J1939_RTYPE RetrieveFrame(J19139_PduTypeDef* pkt)
 	pkt->sa 		= (u8)(id);
 	pkt->PGN.pgn 	= (PGN_T)((id >> 8) & 0x3FFFF);
 	pkt->PGN.edp_dp = (u8)(pkt->PGN.pgn >> 16) & (EDP_MASK|DP_MASK);
-	pkt->PGN.pf 	= (u8)(pkt->PGN.pgn >> 8) & (0xFF);
-	pkt->PGN.ps 	= (u8)(pkt->PGN.pgn >> 0) & (0xFF);
+	pkt->PGN.pf 	= (u8)(pkt->PGN.pgn >> 8);
+	pkt->PGN.ps 	= (u8)(pkt->PGN.pgn >> 0);
 	return J1939_OK;
 }

@@ -57,7 +57,7 @@ void App_Process(void)
 		print_string("PDU PGN: %d\r\n",J1939_PDU.PGN.pgn);
 		print_string("PDU EDP: %d, DP: %d\r\n",(J1939_PDU.PGN.edp_dp & EDP_MASK), (J1939_PDU.PGN.edp_dp & DP_MASK));
 		print_string("PDU Format: %d\r\n",J1939_PDU.PGN.pf);
-		//printf("PDU Specific: %d\r\n");
+		print_string("PDU Specific: %d\r\n");
 		print_string("PDU DLC: %d\r\n",J1939_PDU.dlc);
 		print_string("PDU Priority: %d\r\n",J1939_PDU.priority);
 		print_string("PDU Source Adress: %d\r\n", J1939_PDU.sa);
