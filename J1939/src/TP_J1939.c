@@ -78,7 +78,10 @@ void TP_StateMachine_Run(void)
 
    go_on = TRUE;
    J1939_state_machine.timer_counter++;
-
+	 /*
+	  * TODO: Add DA and SA Check for Rejecting Conn
+	  * TODO: Buffer Allocation for Different Concurrent Connection(BAM or TP)
+	  * */
    while (go_on)
    {
 	  switch (J1939_state_machine.status)
@@ -151,7 +154,7 @@ void TP_StateMachine_Run(void)
 			{
 				if(J1939_state_machine.byte_count < NUMBER_TRANS_RX_BUFFERS)
 				{
-					J1939_state_machine.status = SEND_CTS;
+					J1939_state_machine.status = SEND_DT;
 					J1939_state_machine.timer_counter = 0;
 				}
 			   else
@@ -191,13 +194,13 @@ void TP_StateMachine_Run(void)
 			}
 		 break;
 
-		 case CHECK_PACKET:
+		 case SEND_DT:
 		 break;
 
 		 case SEND_ABORT:
 		 break;
 	  
-		 case SEND_CTS_WITH_COUNT:
+		 case WAIT_FOR_CTS:
 			 /*SEND CLEAR TO SEND*/
 		 break;
 
@@ -251,7 +254,7 @@ void TP_StateMachine_Run(void)
 		 break;
 
 		 case CHECK_DATA_PACKET:
-			if (J1939_state_machine.TP == TP_CM_BAM)
+			if (J1939_state_machine.TP == (TP_CM_BAM|TP_CM_RTS|TP_CM_CTS))
 			{
 			   if (J1939Pdu.sa == J1939_state_machine.source_addr &&
 				  J1939Pdu.PGN.ps == J1939_state_machine.dest_addr)
@@ -278,25 +281,8 @@ void TP_StateMachine_Run(void)
 				  go_on = FALSE;
 			   }
 			}
-			else if (J1939_state_machine.TP == TP_CM_RTS)
-			{
-
-				  if (J1939_state_machine.packet_number == J1939Pdu.data[0]-1)
-				  {
-					 J1939_state_machine.status = SAVE_DATA;
-					 J1939_state_machine.timer_counter = 0;
-					 J1939Pdu.data[0] = 0;
-				  }
-				  else if(J1939Pdu.data[0] != 0)
-				  {
-					 J1939_state_machine.status = RESET_REASSEMBLY_STRUCTURE;
-				  }
-				  else
-				  {
-					 J1939_state_machine.status = WAIT_FOR_DATA;
-					 go_on = FALSE;
-				  }
-			}
+			else if(J1939Pdu.PGN.pgn == TP_CM_CTS)
+			{}
 			else
 			{}
 		 break;
@@ -317,7 +303,7 @@ void TP_StateMachine_Run(void)
 			}
 			else if (((J1939_state_machine.packet_number/TRANSPORT_PACKET_COUNT) == J1939_state_machine.cts_count+1) && J1939_state_machine.TP == TP_CM_RTS)
 			{
-				J1939_state_machine.status 		 = SEND_CTS;
+				J1939_state_machine.status 		  = SEND_CTS;
 				J1939_state_machine.timer_counter = 0;
 			}
 			else
