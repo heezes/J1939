@@ -15,8 +15,6 @@ Extended Identity Frame: 29 Bits
 */
 #include "PACKET_J1939.h"
 #include "queue_aar.h"
-#include "gp_timer.h"
-#include "main.h"
 
 /*Private Variable*/
 Queue CAN_QUEUE;

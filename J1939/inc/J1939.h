@@ -2,6 +2,8 @@
 #define __J1939_H__
 
 #include "stm32f4xx_hal.h"
+#include "gp_timer.h"
+#include "main.h"
 
 typedef uint32_t u32;
 typedef uint8_t u8;
