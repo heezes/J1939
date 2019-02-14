@@ -10,6 +10,16 @@ __weak void Can_DataCallback(J1939_RX_MESSAGE_T *msg)
 //==========================================================================================
 // Transport Layer Interface Functions
 //==========================================================================================
+u8 GET_PACKET_NUMBER(u16 byte_count)
+{
+	u8 count = 0;
+	while(byte_count > 7)
+	{
+		count++;
+		byte_count -= 7;
+	}
+	return ++count;
+}
 
 J1939_RTYPE TL_init(void)
 {
@@ -349,9 +359,26 @@ u8 Transmit_J1939msg(J1939_TX_MESSAGE_T *msg)
 {
    if (msg->byte_count > 8)
    {
-#if NOT_YET
-      // Transport layer for transmission of J1939 messages > 8 bytes not implemented yet
-#endif
+		J19139_PduTypeDef pdu;
+	    pdu.PGN.pgn 		= TP_DT;
+	    pdu.PGN.ps  		= msg->dest_addr;
+	    pdu.PGN.edp_dp		= 0;
+	    pdu.PGN.pf			= (u8)(pdu.PGN.pgn>>8);
+	    pdu.priority		= CM_PRIORITY;
+	    pdu.sa      		= NODEADDR;
+	    pdu.dlc     		= NUMBER_PDU_BUFFERS;
+		u8 total_packets 	= GET_PACKET_NUMBER(msg->byte_count);
+		for(int i = 0; i < total_packets; i++)
+		{
+			pdu.data[0]		= i+1;
+			for(int j = 1; j < NUMBER_PDU_BUFFERS; j++)
+			{
+				pdu.data[j]	= msg->data[(j-1)+(7*i)];
+			}
+			if(PackFrame(&pdu) == J1939_ERROR)
+				return FALSE;
+			HAL_Delay(10);
+		}
    }
    else
    {

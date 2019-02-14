@@ -8,7 +8,7 @@
 #include "stdio.h"
 #include "string.h"
 
-#define TRANSMITTER	0
+#define TRANSMITTER	01
 
 J1939_RX_MESSAGE_T J1939_rx_message;
 
@@ -45,34 +45,18 @@ void App_Process(void)
 	J1939_TX_MESSAGE_T TxMsg;
 	memset(&TxMsg, 0, sizeof(J1939_TX_MESSAGE_T));
 	TxMsg.PGN 			= TP_CM;
-	TxMsg.byte_count	= 14;
+	u8 count			= 48;
+	TxMsg.byte_count	= count;
 	TxMsg.dest_addr		= GLOBADDR;
 	TxMsg.priority		= CM_PRIORITY;
-	u8 total_packets	= (TxMsg.byte_count/7);
 	for(int i = 0; i < TxMsg.byte_count; i++)
 		TxMsg.data[i]	= i+1;
-	Transmit_J1939_BAM(TX_DATA_PGN, TxMsg.byte_count, total_packets);
+	Transmit_J1939_BAM(TX_DATA_PGN, TxMsg.byte_count, GET_PACKET_NUMBER(TxMsg.byte_count));
+	if(Transmit_J1939msg(&TxMsg))
+		print_string("CAN Frame SENT\r\n");
+	else
+		print_string("CAN Frame ERROR\r\n");
 	HAL_Delay(500);
-	J19139_PduTypeDef pdu;
-    pdu.PGN.pgn 		= TP_DT;
-    pdu.PGN.ps  		= TxMsg.dest_addr;
-    pdu.PGN.edp_dp		= 0;
-    pdu.PGN.pf			= (u8)(pdu.PGN.pgn>>8);
-    pdu.priority		= CM_PRIORITY;
-    pdu.sa      		= NODEADDR;
-    pdu.dlc     		= NUMBER_PDU_BUFFERS;
-	for(int i = 0; i < total_packets; i++)
-	{
-		pdu.data[0]		= i+1;
-		for(int j = 1; j < NUMBER_PDU_BUFFERS; j++)
-		{
-			pdu.data[j]	= TxMsg.data[(j-1)+(7*i)];
-		}
-		if(PackFrame(&pdu) == J1939_ERROR)
-			print_string("CAN SEND ERROR\r\n");
-		else
-			print_string("CAN Frame SENT\r\n");
-	}
 #else
 	TL_process();
 	TL_periodic();

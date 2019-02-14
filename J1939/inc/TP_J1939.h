@@ -49,7 +49,7 @@ typedef struct
 //==========================================================================================
 // Transport Layer Interface Functions
 //==========================================================================================
-
+u8 GET_PACKET_NUMBER(u16 byte_count);
 J1939_RTYPE TL_init(void);
 void TL_process(void);
 void TL_periodic(void);
