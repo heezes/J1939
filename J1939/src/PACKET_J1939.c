@@ -45,8 +45,11 @@ J1939_RTYPE PackFrame(J19139_PduTypeDef* pkt)
 {
 	J1939_RTYPE ret = J1939_OK;
 	/*Enqueue*/
-	u32 id;
-	id	= (u32)(pkt->priority << 26) | ((pkt->PGN.pgn<<8 | pkt->PGN.ps<<8)|pkt->sa);
+	u32 id = 0;
+	if(pkt->PGN.pf < 240)
+		id	|= ((pkt->priority << 26) | ((pkt->PGN.pgn | pkt->PGN.ps)<<8)|pkt->sa);
+	else
+		id |= (u32)(pkt->priority << 26) | ((pkt->PGN.pgn<<8)|pkt->sa);
 	ret = CAN_Transmit(id, (u8*)&pkt->data, pkt->dlc);
 	return ret;
 }
@@ -92,11 +95,16 @@ J1939_RTYPE RetrieveFrame(J19139_PduTypeDef* pkt)
 	pkt->sa 		= (u8)(id);
 	pkt->PGN.pf 	= (u8)(id >> 16);
 	if(pkt->PGN.pf > 240)
+	{
 		pkt->PGN.pgn 	= (PGN_T)((id >> 8) & 0x3FFFF);
+		pkt->PGN.ps 	= (u8)(pkt->PGN.pgn >> 0);
+	}
 	else
+	{
 		pkt->PGN.pgn 	= (PGN_T)((id >> 8) & 0x3FF00);
+		pkt->PGN.ps 	= (u8)(id >> 8);
+	}
 	pkt->PGN.edp_dp = (u8)(pkt->PGN.pgn >> 16) & (EDP_MASK|DP_MASK);
 	pkt->PGN.pf 	= (u8)(pkt->PGN.pgn >> 8);
-	pkt->PGN.ps 	= (u8)(pkt->PGN.pgn >> 0);
 	return J1939_OK;
 }

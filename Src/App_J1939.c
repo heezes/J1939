@@ -54,7 +54,7 @@ void App_Process(void)
 	Transmit_J1939_BAM(TX_DATA_PGN, TxMsg.byte_count, total_packets);
 	HAL_Delay(500);
 	J19139_PduTypeDef pdu;
-    pdu.PGN.pgn 		= 60160;
+    pdu.PGN.pgn 		= TP_DT;
     pdu.PGN.ps  		= TxMsg.dest_addr;
     pdu.PGN.edp_dp		= 0;
     pdu.PGN.pf			= (u8)(pdu.PGN.pgn>>8);
