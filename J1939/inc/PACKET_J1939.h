@@ -35,7 +35,7 @@ typedef struct
 }J19139_PduTypeDef;
 
 /*Function Decleration*/
-J1939_RTYPE Interface_Init(J19139_PduTypeDef* pkt);
+J1939_RTYPE Interface_Init(void);
 J1939_RTYPE Interface_DeInit(J19139_PduTypeDef* pkt);
 J1939_RTYPE PackFrame(J19139_PduTypeDef* pkt);
 J1939_RTYPE RetrieveFrame(J19139_PduTypeDef* pkt);

@@ -19,7 +19,7 @@
 							<option id="com.atollic.truestudio.toolchain_options.mcu.1917355246" name="Microcontroller" superClass="com.atollic.truestudio.toolchain_options.mcu" value="STM32F405RG" valueType="string"/>
 							<option id="com.atollic.truestudio.toolchain_options.vendor.1267044486" name="Vendor name" superClass="com.atollic.truestudio.toolchain_options.vendor" value="STMicroelectronics" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.atollic.truestudio.exe.debug.toolchain.platform.2054752829" isAbstract="false" name="Debug platform" superClass="com.atollic.truestudio.exe.debug.toolchain.platform"/>
-							<builder buildPath="${workspace_loc:/J1939_Test}/Debug" customBuilderProperties="toolChainpathString=C:\\Program Files (x86)\\Atollic\\TrueSTUDIO for STM32 9.2.0\\ARMTools\\bin|toolChainpathType=1|" id="com.atollic.truestudio.mbs.builder1.1222194476" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="com.atollic.truestudio.mbs.builder1">
+							<builder buildPath="${workspace_loc:/J1939_Test}/Debug" customBuilderProperties="toolChainpathType=1|toolChainpathString=C:\\Program Files (x86)\\Atollic\\TrueSTUDIO for STM32 9.2.0\\ARMTools\\bin|" id="com.atollic.truestudio.mbs.builder1.1222194476" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="com.atollic.truestudio.mbs.builder1">
 								<outputEntries>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
 								</outputEntries>
@@ -106,6 +106,7 @@
 							<tool id="com.atollic.truestudio.ar.base.509588919" name="Archiver" superClass="com.atollic.truestudio.ar.base"/>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="com.atollic.truestudio.exe.debug.1518366166.632374701" name="StateMachine.h" rcbsApplicability="disable" resourcePath="J1939/inc/StateMachine.h" toolsToInvoke=""/>
 					<fileInfo id="com.atollic.truestudio.exe.debug.311825581.983937533" name="" rcbsApplicability="disable" resourcePath="nofile" toolsToInvoke="com.atollic.truestudio.exe.debug.toolchain.gcc.1836874447.1976695455">
 						<tool id="com.atollic.truestudio.exe.debug.toolchain.gcc.1836874447.1976695455" name="C Compiler" superClass="com.atollic.truestudio.exe.debug.toolchain.gcc.1836874447">
 							<inputType id="com.atollic.truestudio.gcc.input.1274347818" superClass="com.atollic.truestudio.gcc.input"/>
@@ -114,7 +115,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Inc"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="J1939"/>
+						<entry excluding="src/StateMachine.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="J1939"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
 					</sourceEntries>
@@ -135,7 +136,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="com.atollic.truestudio.exe.release.1518366166" name="Release" postbuildStep="arm-atollic-eabi-objcopy.exe -O ihex &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${BuildArtifactFileBaseName}.hex&quot;" prebuildStep="">
+				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="com.atollic.truestudio.exe.release.1518366166" name="Release" parent="com.atollic.truestudio.exe.release.1518366166" postbuildStep="arm-atollic-eabi-objcopy.exe -O ihex &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${BuildArtifactFileBaseName}.hex&quot;" prebuildStep="">
 					<folderInfo id="com.atollic.truestudio.exe.release.1518366166.2031504340" name="/" resourcePath="">
 						<toolChain id="com.atollic.truestudio.exe.release.toolchain.683225115" name="Atollic ARM Tools" superClass="com.atollic.truestudio.exe.release.toolchain">
 							<option id="com.atollic.truestudio.general.runtimelib.1477047787" name="Runtime Library" superClass="com.atollic.truestudio.general.runtimelib" value="com.atollic.truestudio.ld.general.clib.small" valueType="enumerated"/>
@@ -234,10 +235,10 @@
 						</tool>
 					</fileInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Inc"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

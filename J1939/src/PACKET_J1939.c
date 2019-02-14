@@ -20,14 +20,15 @@ Extended Identity Frame: 29 Bits
 Queue CAN_QUEUE;
 static u8 CAN_BUFFER[CAN_BUFFER_SIZE];
 
-J1939_RTYPE Interface_Init(J19139_PduTypeDef* pkt)
+J1939_RTYPE Interface_Init(void)
 {
 	J1939_RTYPE ret = J1939_OK;
+	/*
 	pkt->PGN.edp_dp = 0; pkt->PGN.pf = 0; pkt->PGN.ps = 0; pkt->PGN.pgn = 0;
 	pkt->dlc 		= 0;
 	pkt->priority 	= 0;
 	pkt->sa 		= 0;
-	memset(pkt->data,0,sizeof(pkt->data));
+	memset(pkt->data,0,sizeof(pkt->data));*/
 	create_queue(&CAN_QUEUE,&CAN_BUFFER, sizeof(CAN_BUFFER)/sizeof(u8), CHAR);
 	ret = CAN_Init();
 	return ret;
@@ -45,7 +46,7 @@ J1939_RTYPE PackFrame(J19139_PduTypeDef* pkt)
 	J1939_RTYPE ret = J1939_OK;
 	/*Enqueue*/
 	u32 id;
-	id  = (u32)(pkt->priority << 26) | ((pkt->PGN.pgn<<8) | pkt->sa);
+	id	= (u32)(pkt->priority << 26) | ((pkt->PGN.pgn<<8 | pkt->PGN.ps<<8)|pkt->sa);
 	ret = CAN_Transmit(id, (u8*)&pkt->data, pkt->dlc);
 	return ret;
 }

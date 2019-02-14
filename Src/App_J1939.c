@@ -6,28 +6,87 @@
  */
 #include "App_J1939.h"
 #include "stdio.h"
-
-J19139_PduTypeDef J1939_PDU;
+#include "string.h"
 
 #define TRANSMITTER	0
 
+J1939_RX_MESSAGE_T J1939_rx_message;
+
+void Can_DataCallback(J1939_RX_MESSAGE_T *msg)
+{
+
+	print_string("PGN: %d\r\n", msg->PGN);
+	print_string("Data Size: %d Byte\r\n", msg->byte_count);
+	print_string("Source Address: %d\r\n", msg->source_addr);
+	print_string("Destination Address: %d\r\n", msg->dest_addr);
+	print_string("Data Recevived: \r\n");
+	for(int i = 0; i< msg->byte_count; i++)
+		print_string("%d ",msg->data[i]);
+	print_string("\r\n");
+}
+
 void App_Init(void)
 {
-	if(Interface_Init(&J1939_PDU) == J1939_OK){
+	if(TL_init() == J1939_OK)
+	{
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12, GPIO_PIN_SET);
-		print_string("Interface Initialized\r\n");
+		print_string("Transport Layer Initialized\r\n");
 	}
 	else
-		print_string("Interface Initialization Error\r\n");
+		print_string("Transport Layer Initialization Error\r\n");
 }
+
+#define TX_DATA_PGN		60928
 
 void App_Process(void)
 {
 #if TRANSMITTER
 	HAL_Delay(1000);
-	J1939_PDU.PGN.pgn 		= 59392;
+	J1939_TX_MESSAGE_T TxMsg;
+	memset(&TxMsg, 0, sizeof(J1939_TX_MESSAGE_T));
+	TxMsg.PGN 			= TP_CM;
+	TxMsg.byte_count	= 14;
+	TxMsg.dest_addr		= GLOBADDR;
+	TxMsg.priority		= CM_PRIORITY;
+	u8 total_packets	= (TxMsg.byte_count/7);
+	for(int i = 0; i < TxMsg.byte_count; i++)
+		TxMsg.data[i]	= i+1;
+	Transmit_J1939_BAM(TX_DATA_PGN, TxMsg.byte_count, total_packets);
+	HAL_Delay(500);
+	J19139_PduTypeDef pdu;
+    pdu.PGN.pgn 		= 60160;
+    pdu.PGN.ps  		= TxMsg.dest_addr;
+    pdu.PGN.edp_dp		= 0;
+    pdu.PGN.pf			= (u8)(pdu.PGN.pgn>>8);
+    pdu.priority		= CM_PRIORITY;
+    pdu.sa      		= NODEADDR;
+    pdu.dlc     		= NUMBER_PDU_BUFFERS;
+	for(int i = 0; i < total_packets; i++)
+	{
+		pdu.data[0]		= i+1;
+		for(int j = 1; j < NUMBER_PDU_BUFFERS; j++)
+		{
+			pdu.data[j]	= TxMsg.data[(j-1)+(7*i)];
+		}
+		if(PackFrame(&pdu) == J1939_ERROR)
+			print_string("CAN SEND ERROR\r\n");
+		else
+			print_string("CAN Frame SENT\r\n");
+	}
+#else
+	TL_process();
+	TL_periodic();
+#endif
+}
+
+#if 0
+void App_Process(void)
+{
+#if TRANSMITTER
+	HAL_Delay(1000);
+	J1939_PDU.PGN.pgn 		= 60928;
 	J1939_PDU.PGN.edp_dp	= 0;
-	J1939_PDU.PGN.pf 		= 220;
+	J1939_PDU.PGN.pf 		= 238;
 	J1939_PDU.PGN.ps		= 20;
 	J1939_PDU.dlc 			= 8;
 	J1939_PDU.priority		= 7;
@@ -69,3 +128,4 @@ void App_Process(void)
 	}
 #endif
 }
+#endif
