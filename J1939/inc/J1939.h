@@ -39,6 +39,7 @@ typedef int8_t  s8;
 #define HIGHEST_PRIORITY			   7
 #define CM_PRIORITY			  		   HIGHEST_PRIORITY
 #define RESERVED_BYTE				   0xFF
+#define TRANSPORT_PACKET_COUNT		   5
 
 /**/
 #define J1939STACK_VERSION             130
@@ -63,14 +64,14 @@ typedef int8_t  s8;
 #define INIT_REASSEMBLE_STRUCTURE      1         // State One: Message reassemble structure and message timer are initialized.
 #define CHECK_PACKET                   2         // State Two: The incoming message is for this node.
 #define SEND_ABORT                     3         // State Three:  No more buffers to reassemble incoming message, Abort is sent.
-#define SEND_CTS_WITH_COUNT            4         // State Four: Buffers are available to reassemble incoming message, send CTS back to sender to indicate number of packets between next CTS (TRANSPORT_PACKET_COUNT). 
+#define SEND_DT			               4         // State Four: Buffers are available to reassemble incoming message, send CTS back to sender to indicate number of packets between next CTS (TRANSPORT_PACKET_COUNT).
 #define WAIT_FOR_DATA                  5         // State Five: Waiting for DATA type packet from source.
 #define CHECK_TIMER                    6         // State Six:  Message timer is checked for expiration.
 #define RESET_REASSEMBLY_STRUCTURE     7         // State Seven: Message reassemble structure is reset.
 #define CHECK_DATA_PACKET              8         // State Eight: A DATA type packet has arrived and checked.
 #define SAVE_DATA                      9         // State Nine: The data is saved in the message reassemble buffer
 #define SEND_EOM                       10        // State Ten:  EOM message is sent.
-#define SEND_CTS                       11        // State Eleven: CTS is sent to trigger more data from the sender. 
+#define SEND_CTS                       11        // State Eleven: CTS is sent to trigger more data from the sender.
 #define FILL_USER_MESSAGE              12        // State Twelve: The J1939_RX_MESSAGE_T data structure is filled for user application.
 
 // Transport Protocol Layer
