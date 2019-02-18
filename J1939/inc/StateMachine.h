@@ -1,56 +1,60 @@
-#ifndef __STATE_MACHINE_H__
-#define __STATE_MACHINE_H__
+#ifndef __J1939_TL_H__
+#define __J1939_TL_H__
 
 #include "PACKET_J1939.h"
 
-/**/
-#define TRUE	1
-#define FALSE	!TRUE
-
-/*FSM STATES*/
-#define  RECEIVE_PACKET    1
-#define  CHECK_PACKET      2
-#define  WAIT_FOR_DATA     3
-#define  CHECK_TIMER       4
-#define  RESET_STATE       5
-#define  CHECK_EOM    	   6
-#define  SAVE_DATA         7
-
-/*Connection Management PGN*/
-#define TP_CM_PGN          0x00EC00
-
-/*Transport Protocol Mode*/
-#define BAM_DT         0
-#define TP_DT 	       1
-/*Control Bytes*/
-#define	TP_CM_DT		   1
-#define TP_CM_RTS          16
-#define TP_CM_CTS          17
-#define TP_CM_BAM          32
-#define TP_CM_EOM          19
-#define TP_CM_ABORT        255
-
-/**/
-#define NODEADDR                       0x23
-#define GLOBADDR                       0xFF
-#define NULLADDR                       0xFE
-#define NUMBER_PDU_BUFFERS 			   8
-#define MAX_BAM_TIMEOUT				   750
 
 typedef struct
 {
    PGN_T PGN;
-   u8    state;
-   u8    packet_number;
-   u8    total_packet_number;
-   u8 	 cts_count;
-   u16   byte_count;
-   //u16   timer_counter;
-   u8    source_addr;
-   u8    dest_addr;
-   u8    mode;
-   u8    buffer[NUMBER_PDU_BUFFERS];
-   struct timer *t;
-}J1939_StateMachine;
+   u8 	data[NUMBER_TRANS_TX_BUFFERS];
+   u16 	byte_count;
+   u8 	priority;
+   u8 	dest_addr;
+   s8 	status;
+} J1939_TX_MESSAGE_T;
+
+typedef struct
+{
+   PGN_T PGN;
+   u8 	data[NUMBER_TRANS_RX_BUFFERS];
+   u16 	byte_count;
+   u8 	source_addr;
+   u8 	dest_addr;
+} J1939_RX_MESSAGE_T;
+
+typedef struct
+{
+   PGN_T PGN;
+   u8 	data[NUMBER_PDU_BUFFERS];
+   u16 	byte_count;
+   u8 	dest_addr;
+   u8 	source_addr;
+} J1939_RX_PDU_T;
+
+typedef struct
+{
+   PGN_T PGN;
+   u8 	status;
+   u8 	packet_number;
+   u8 	total_packet_number;
+   u16 	byte_count;
+   u16 	timer_counter;
+   u8 	source_addr;
+   u8 	dest_addr;
+   u8 	TP;
+   struct Timer t;
+} J1939_RX_STATE_MACHINE_T;
+
+
+//==========================================================================================
+// Transport Layer Interface Functions
+//==========================================================================================
+u8 GET_PACKET_NUMBER(u16 byte_count);
+J1939_RTYPE TL_init(void);
+void TL_process(void);
+void TL_periodic(void);
+u8 Transmit_J1939_BAM(PGN_T pgn, u16 size, u8 total_packets);
+u8 Transmit_J1939msg(J1939_TX_MESSAGE_T *msg);
 
 #endif
