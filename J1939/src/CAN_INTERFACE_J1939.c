@@ -43,11 +43,11 @@ J1939_RTYPE CAN_Init(void)
 	J1939_RTYPE ret = J1939_OK;
 	/*CAN Harware Initialization Implementation*/
 	hcan1.Instance = CAN1;
-	hcan1.Init.Prescaler = 42;
+	hcan1.Init.Prescaler = 2;
 	hcan1.Init.Mode = CAN_MODE_NORMAL;
-	hcan1.Init.SyncJumpWidth = CAN_SJW_2TQ;
-	hcan1.Init.TimeSeg1 = CAN_BS1_3TQ;
-	hcan1.Init.TimeSeg2 = CAN_BS2_5TQ;
+	hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
+	hcan1.Init.TimeSeg1 = CAN_BS1_10TQ;
+	hcan1.Init.TimeSeg2 = CAN_BS2_2TQ;
 	hcan1.Init.TimeTriggeredMode = DISABLE;
 	hcan1.Init.AutoBusOff = ENABLE;
 	hcan1.Init.AutoWakeUp = DISABLE;

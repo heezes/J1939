@@ -8,7 +8,7 @@
 #include "stdio.h"
 #include "string.h"
 
-#define TRANSMITTER	01
+#define TRANSMITTER	1
 
 J1939_RX_MESSAGE_T J1939_rx_message;
 
