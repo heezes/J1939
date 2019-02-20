@@ -448,7 +448,7 @@ void TP_tx_Process(void)
 			   if(Timer_Expired(&J1939_tx_state_machine.t))
 			   {
 				   J1939_tx_state_machine.status = RESET_REASSEMBLY_STRUCTURE;
-				   Transmit_J1939_Abort(&TxMsg);
+				   Transmit_J1939_Abort(TxMsg.PGN, ABORT_TIMEOUT, TxMsg.dest_addr);
 			   }
 			   else
 			   {
@@ -587,7 +587,7 @@ u8 Transmit_J1939_RTS(J1939_TX_MESSAGE_T *msg)
 {
     J19139_PduTypeDef pdu;
     pdu.PGN.pgn 		= TP_CM;
-    pdu.PGN.ps  		= GLOBADDR;
+    pdu.PGN.ps  		= msg->dest_addr;
     pdu.PGN.edp_dp		= 0;
     pdu.PGN.pf			= (u8)(pdu.PGN.pgn>>8);
     pdu.priority		= CM_PRIORITY;
@@ -607,12 +607,90 @@ u8 Transmit_J1939_RTS(J1939_TX_MESSAGE_T *msg)
 
     if(PackFrame(&pdu) == J1939_ERROR)
        return FALSE;
-    Timer_Set(&J1939_rx_state_machine.t,RECEIVE_RESP_TIMEOUT);
+    Timer_Set(&J1939_tx_state_machine.t,RECEIVE_RESP_TIMEOUT);
     //J1939_
     return TRUE;
 }
 
 static u8 Transmit_J1939_CTS(J1939_RX_STATE_MACHINE_T* RxStateMachine)
 {
+    J19139_PduTypeDef pdu;
+    pdu.PGN.pgn 		= TP_CM;
+    pdu.PGN.ps  		= RxStateMachine->dest_addr;
+    pdu.PGN.edp_dp		= 0;
+    pdu.PGN.pf			= (u8)(pdu.PGN.pgn>>8);
+    pdu.priority		= CM_PRIORITY;
+    pdu.sa      		= NODEADDR;
+    pdu.dlc     		= NUMBER_PDU_BUFFERS;
 
+	/* initial RTS data */
+    pdu.data[0] = TP_CM_CTS;
+    pdu.data[1] = (uint8_t) TRANSPORT_PACKET_COUNT;
+    pdu.data[2] = (uint8_t) RxStateMachine->packet_number+1;
+    pdu.data[3] = RESERVED_BYTE;
+    pdu.data[4] = RESERVED_BYTE;
+    pdu.data[7] = (uint8_t)((msg->PGN>>16) & 0xff);  /* MSB */
+    pdu.data[6] = (uint8_t)(msg->PGN>>8 & 0xff);
+    /*PDU Format < 240*/
+    pdu.data[5] = (uint8_t)(msg->PGN & 0x00);   /* LSB */
+
+    if(PackFrame(&pdu) == J1939_ERROR)
+       return FALSE;
+    Timer_Set(&J1939_rx_state_machine.t,RECEIVE_RESP_TIMEOUT);
+    return TRUE;
+
+}
+
+static u8 Transmit_J1939_Abort(PGN_T pgn, u8 reason, u8 DestAddr)
+{
+    J19139_PduTypeDef pdu;
+    pdu.PGN.pgn 		= TP_CM;
+    pdu.PGN.ps  		= DestAddr;
+    pdu.PGN.edp_dp		= 0;
+    pdu.PGN.pf			= (u8)(pdu.PGN.pgn>>8);
+    pdu.priority		= CM_PRIORITY;
+    pdu.sa      		= NODEADDR;
+    pdu.dlc     		= NUMBER_PDU_BUFFERS;
+
+	/* initial RTS data */
+    pdu.data[0] = TP_CM_CONN_ABORT;
+    pdu.data[1] = (uint8_t) reason;
+    pdu.data[2] = RESERVED_BYTE;
+    pdu.data[3] = RESERVED_BYTE;
+    pdu.data[4] = RESERVED_BYTE;
+    pdu.data[7] = (uint8_t)((pgn>>16) & 0xff);  /* MSB */
+    pdu.data[6] = (uint8_t)(pgn>>8 & 0xff);
+    /*PDU Format < 240*/
+    pdu.data[5] = (uint8_t)(pgn & 0x00);   /* LSB */
+
+    if(PackFrame(&pdu) == J1939_ERROR)
+       return FALSE;
+    return TRUE;
+}
+
+static u8 Transmit_J1939_EOM(J1939_RX_STATE_MACHINE_T* RxStateMachine)
+{
+    J19139_PduTypeDef pdu;
+    pdu.PGN.pgn 		= TP_CM;
+    pdu.PGN.ps  		= RxStateMachine->dest_addr;
+    pdu.PGN.edp_dp		= 0;
+    pdu.PGN.pf			= (u8)(pdu.PGN.pgn>>8);
+    pdu.priority		= CM_PRIORITY;
+    pdu.sa      		= NODEADDR;
+    pdu.dlc     		= NUMBER_PDU_BUFFERS;
+
+	/* initial RTS data */
+    pdu.data[0] = TP_CM_END_OF_MSG_ACK;
+    pdu.data[1] = (uint8_t) RxStateMachine->byte_count ;
+    pdu.data[2] = (uint8_t) ((RxStateMachine->byte_count)>>8);
+    pdu.data[3] = RxStateMachine->total_packet_number;
+    pdu.data[4] = RESERVED_BYTE;
+    pdu.data[7] = (uint8_t)((msg->PGN>>16) & 0xff);  /* MSB */
+    pdu.data[6] = (uint8_t)(msg->PGN>>8 & 0xff);
+    /*PDU Format < 240*/
+    pdu.data[5] = (uint8_t)(msg->PGN & 0x00);   /* LSB */
+
+    if(PackFrame(&pdu) == J1939_ERROR)
+       return FALSE;
+    return TRUE;
 }

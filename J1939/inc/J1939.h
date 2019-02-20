@@ -41,6 +41,11 @@ typedef int8_t  s8;
 #define RESERVED_BYTE				   0xFF
 #define TRANSPORT_PACKET_COUNT		   5
 
+/*Abort Reason*/
+#define ABORT_ALREADY_CONNECTED		   1
+#define ABORT_RESOURCE_UNAVILABLE	   2
+#define ABORT_TIMEOUT				   3
+
 /*Timeout Define (ms)*/
 #define SEND_TIMEOUT				   750
 #define RECEIVE_RESP_TIMEOUT		   1250
