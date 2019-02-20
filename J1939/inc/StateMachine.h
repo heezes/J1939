@@ -46,6 +46,14 @@ typedef struct
    struct Timer t;
 } J1939_RX_STATE_MACHINE_T;
 
+typedef struct
+{
+   u8 	status;
+   u8 	packet_number;
+   u8 	cts_count;
+   struct Timer t;
+} J1939_TX_STATE_MACHINE_T;
+
 
 //==========================================================================================
 // Transport Layer Interface Functions

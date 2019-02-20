@@ -415,6 +415,7 @@ void TP_tx_Process(void)
 	                   J1939_tx_state_machine.cts_count	= J1939_rx_pdu.data[1];
 	                   J1939_tx_state_machine.packet_number = J1939_rx_pdu.data[2];
 	                   J1939_tx_state_machine.status = CHECK_CM;
+	                   TxMsg.status = TP_CM_CTS;
 				   }
 				   else if((J1939_rx_pdu.data[0] == TP_CM_END_OF_MSG_ACK) ||(J1939_rx_pdu.data[0] == TP_CM_CONN_ABORT))
 				   {
@@ -609,4 +610,9 @@ u8 Transmit_J1939_RTS(J1939_TX_MESSAGE_T *msg)
     Timer_Set(&J1939_rx_state_machine.t,RECEIVE_RESP_TIMEOUT);
     //J1939_
     return TRUE;
+}
+
+static u8 Transmit_J1939_CTS(J1939_RX_STATE_MACHINE_T* RxStateMachine)
+{
+
 }
