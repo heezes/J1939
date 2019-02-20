@@ -1,11 +1,11 @@
 #MicroXplorer Configuration settings - do not modify
 CAN1.ABOM=DISABLE
-CAN1.BS1=CAN_BS1_3TQ
-CAN1.BS2=CAN_BS2_5TQ
-CAN1.CalculateTimeQuantum=1000.0
+CAN1.BS1=CAN_BS1_14TQ
+CAN1.BS2=CAN_BS2_6TQ
+CAN1.CalculateTimeQuantum=95.23809523809524
 CAN1.IPParameters=CalculateTimeQuantum,BS1,BS2,SJW,ABOM,TXFP,Prescaler
-CAN1.Prescaler=42
-CAN1.SJW=CAN_SJW_2TQ
+CAN1.Prescaler=4
+CAN1.SJW=CAN_SJW_1TQ
 CAN1.TXFP=DISABLE
 File.Version=6
 KeepUserPlacement=false

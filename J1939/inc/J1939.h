@@ -40,6 +40,12 @@ typedef int8_t  s8;
 #define CM_PRIORITY			  		   HIGHEST_PRIORITY
 #define RESERVED_BYTE				   0xFF
 
+/*Timeout Define (ms)*/
+#define SEND_TIMEOUT				   750
+#define RECEIVE_RESP_TIMEOUT		   1250
+#define SEND_RESP_TIMEOUT			   200
+#define CTS_WAIT_TIMEOUT			   1050
+
 /**/
 #define J1939STACK_VERSION             130
 

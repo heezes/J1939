@@ -14,7 +14,6 @@ J1939_RX_MESSAGE_T J1939_rx_message;
 
 void Can_DataCallback(J1939_RX_MESSAGE_T *msg)
 {
-
 	print_string("PGN: %d\r\n", msg->PGN);
 	print_string("Data Size: %d Byte\r\n", msg->byte_count);
 	print_string("Source Address: %d\r\n", msg->source_addr);

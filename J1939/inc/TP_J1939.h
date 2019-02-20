@@ -32,6 +32,9 @@ typedef struct
    u8 	source_addr;
 } J1939_RX_PDU_T;
 
+
+/*AT+QSSLCFG = "certchain", 1*/
+
 typedef struct
 {
    PGN_T PGN;
