@@ -63,7 +63,9 @@ u8 GET_PACKET_NUMBER(u16 byte_count);
 J1939_RTYPE TL_init(void);
 void TL_process(void);
 void TL_periodic(void);
+void TP_tx_Process(void);
 u8 Transmit_J1939_BAM(J1939_TX_MESSAGE_T *msg);
+u8 Transmit_J1939_RTS(J1939_TX_MESSAGE_T *msg);
 u8 Transmit_J1939msg(J1939_TX_MESSAGE_T *msg);
 
 #endif
