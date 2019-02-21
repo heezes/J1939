@@ -43,19 +43,19 @@ void App_Process(void)
 	HAL_Delay(1000);
 	J1939_TX_MESSAGE_T TxMsg;
 	memset(&TxMsg, 0, sizeof(J1939_TX_MESSAGE_T));
-	TxMsg.PGN 			= TP_CM;
-	u8 count			= 48;
+	TxMsg.PGN 			= 60928;
+	u8 count			= 8;
 	TxMsg.byte_count	= count;
 	TxMsg.dest_addr		= GLOBADDR;
 	TxMsg.priority		= CM_PRIORITY;
 	for(int i = 0; i < TxMsg.byte_count; i++)
 		TxMsg.data[i]	= i+1;
-	Transmit_J1939_BAM(TX_DATA_PGN, TxMsg.byte_count, GET_PACKET_NUMBER(TxMsg.byte_count));
+	//Transmit_J1939_BAM(TX_DATA_PGN, TxMsg.byte_count, GET_PACKET_NUMBER(TxMsg.byte_count));
 	if(Transmit_J1939msg(&TxMsg))
 		print_string("CAN Frame SENT\r\n");
 	else
 		print_string("CAN Frame ERROR\r\n");
-	HAL_Delay(500);
+	HAL_Delay(1000);
 #else
 	TL_process();
 	TL_periodic();

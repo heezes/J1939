@@ -1,4 +1,5 @@
 #include "TP_J1939.h"
+#include "string.h"
 
 extern J1939_RX_MESSAGE_T J1939_rx_message;
 static J1939_RX_STATE_MACHINE_T J1939_rx_state_machine;
@@ -93,6 +94,7 @@ void TL_process(void)
          }
          // send message up the stack to the Network Management Layer
          Can_DataCallback(&msg);
+         memset(&msg, 0, sizeof(J1939_RX_MESSAGE_T));
       }
    }
 }

@@ -94,7 +94,8 @@ static J1939_RTYPE CAN_Receive(u32 id, u8* data, u8 len)
 J1939_RTYPE CAN_Transmit(u32 id, u8* data, u8 len)
 {
 	CAN_TxHeaderTypeDef TxHeader;
-	TxHeader.ExtId	 = id;
+	//TxHeader.ExtId	 = id;
+	TxHeader.StdId	 = 100;
 	TxHeader.RTR 	 = CAN_RTR_DATA;
 	TxHeader.DLC 	 = len;
 	if(id > 0x7FF)

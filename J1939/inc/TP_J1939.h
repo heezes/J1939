@@ -33,7 +33,7 @@ typedef struct
 } J1939_RX_PDU_T;
 
 
-/*AT+QSSLCFG = "certchain", 1*/
+
 
 typedef struct
 {
