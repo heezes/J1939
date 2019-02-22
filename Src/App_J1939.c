@@ -37,7 +37,7 @@ void App_Init(void)
 #if TRANSMITTER
 	memset(&TxMsg, 0, sizeof(J1939_TX_MESSAGE_T));
 	TxMsg.PGN 			= 60928;
-	u8 count			= 8;
+	u8 count			= 50;
 	TxMsg.byte_count	= count;
 	TxMsg.dest_addr		= GLOBADDR;
 	TxMsg.priority		= CM_PRIORITY;
@@ -54,13 +54,14 @@ void App_Init(void)
 
 void App_Process(void)
 {
+#if 1
 	TL_process();
 #if TRANSMITTER
 	TP_tx_Process();
 #else
-	TL_process();
+	TL_periodic();
 #endif
-
+#endif
 
 #if 0
 #if TRANSMITTER
@@ -68,21 +69,21 @@ void App_Process(void)
 	J1939_TX_MESSAGE_T TxMsg;
 	memset(&TxMsg, 0, sizeof(J1939_TX_MESSAGE_T));
 	TxMsg.PGN 			= 60928;
-	u8 count			= 8;
+	u8 count			= 50;
 	TxMsg.byte_count	= count;
 	TxMsg.dest_addr		= GLOBADDR;
 	TxMsg.priority		= CM_PRIORITY;
+	TxMsg.status		= TP_CM_BAM;
 	for(int i = 0; i < TxMsg.byte_count; i++)
 		TxMsg.data[i]	= i+1;
-	//Transmit_J1939_BAM(TX_DATA_PGN, TxMsg.byte_count, GET_PACKET_NUMBER(TxMsg.byte_count));
+	Transmit_J1939_BAM(&TxMsg);
 	if(Transmit_J1939msg(&TxMsg))
 		print_string("CAN Frame SENT\r\n");
 	else
 		print_string("CAN Frame ERROR\r\n");
-	HAL_Delay(1000);
 #else
 	TL_process();
-	TL_process();
+	TL_periodic();
 #endif
 #endif
 }

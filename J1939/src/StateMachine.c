@@ -45,7 +45,8 @@ J1939_RTYPE TL_init(void)
 	J1939_rx_state_machine.dest_addr = 0;
 	J1939_rx_state_machine.source_addr = 0;
 	J1939_rx_state_machine.packet_number = 0;
-	J1939_rx_state_machine.timer_counter = 0;
+	//J1939_rx_state_machine.timer_counter = 0;
+	Timer_Reset(&J1939_rx_state_machine.t);
 	J1939_rx_state_machine.total_packet_number = 0;
 	J1939_rx_state_machine.byte_count = 0;
 	J1939_rx_state_machine.status = WAIT_FOR_MESSAGE;
@@ -121,6 +122,7 @@ void TL_periodic(void)
          case  WAIT_FOR_MESSAGE:
             if ((J1939_rx_pdu.PGN == TP_CM) )//&& (J1939_rx_pdu.dest_addr == GLOBADDR || J1939_rx_pdu.dest_addr == NODEADDR))
             {
+               print_string("WAIT_FOR_MESSAGE\r\n");
                if (J1939_rx_pdu.data[0] == TP_CM_RTS)
                {
             	   /*Last 8 bit not extracted because DA*/
@@ -131,6 +133,7 @@ void TL_periodic(void)
                   J1939_rx_state_machine.source_addr = J1939_rx_pdu.source_addr;
                   J1939_rx_state_machine.packet_number = 0;
                   //J1939_rx_state_machine.timer_counter = 0;
+                  Timer_Reset(&J1939_rx_state_machine.t);
                   J1939_rx_state_machine.total_packet_number = J1939_rx_pdu.data[3];
                   J1939_rx_state_machine.byte_count = J1939_rx_pdu.data[2];
                   J1939_rx_state_machine.byte_count <<= 8;
@@ -147,7 +150,8 @@ void TL_periodic(void)
                   J1939_rx_state_machine.dest_addr = J1939_rx_pdu.dest_addr;
                   J1939_rx_state_machine.source_addr = J1939_rx_pdu.source_addr;
                   J1939_rx_state_machine.packet_number = 0;
-                  J1939_rx_state_machine.timer_counter = 0;
+                  //J1939_rx_state_machine.timer_counter = 0;
+                  Timer_Reset(&J1939_rx_state_machine.t);
                   J1939_rx_state_machine.total_packet_number = J1939_rx_pdu.data[3];
                   J1939_rx_state_machine.byte_count = J1939_rx_pdu.data[2];
                   J1939_rx_state_machine.byte_count <<= 8;
@@ -187,6 +191,7 @@ void TL_periodic(void)
          break;
 
          case INIT_REASSEMBLE_STRUCTURE:
+         	print_string("INIT_REASSEMBLE_STRUCTURE\r\n");
             if (J1939_rx_state_machine.TP == TP_CM_RTS)
             {
                 if (J1939_rx_state_machine.byte_count < NUMBER_TRANS_RX_BUFFERS)
@@ -225,11 +230,13 @@ void TL_periodic(void)
                      J1939_rx_message.data[i] = 0;
                   }
                   J1939_rx_state_machine.status = WAIT_FOR_DATA;
+                  Timer_Set(&J1939_rx_state_machine.t,RECEIVE_RESP_TIMEOUT);
                }
                else
                {
                   J1939_rx_state_machine.status= WAIT_FOR_MESSAGE;
-                  J1939_rx_state_machine.timer_counter = 0;
+                  Timer_Reset(&J1939_rx_state_machine.t);
+                  //J1939_rx_state_machine.timer_counter = 0;
                   go_on = FALSE;
                   //break;
                }
@@ -237,7 +244,8 @@ void TL_periodic(void)
             else
             {
                J1939_rx_state_machine.status = WAIT_FOR_MESSAGE;
-               J1939_rx_state_machine.timer_counter = 0;
+               //J1939_rx_state_machine.timer_counter = 0;
+               Timer_Reset(&J1939_rx_state_machine.t);
                go_on = FALSE;
                //break;
             }
@@ -250,6 +258,7 @@ void TL_periodic(void)
          break;
 
          case WAIT_FOR_DATA:
+         	print_string("WAIT_FOR_DATA\r\n");
             if (J1939_rx_pdu.PGN == TP_DT)
             {
                J1939_rx_state_machine.status = CHECK_DATA_PACKET;
@@ -263,6 +272,7 @@ void TL_periodic(void)
          break;
 
          case CHECK_TIMER:
+         	print_string("CHECK_TIMER\r\n");
 /*            if (J1939_rx_state_machine.timer_counter > (750/TICK))   // 750ms
             {
                J1939_rx_state_machine.status = RESET_REASSEMBLY_STRUCTURE;
@@ -271,6 +281,7 @@ void TL_periodic(void)
             }*/
             if(Timer_Expired(&J1939_rx_state_machine.t))
             {
+            	print_string("Timer Expired\r\n");
                 J1939_rx_state_machine.status = RESET_REASSEMBLY_STRUCTURE;
             }
             else
@@ -281,11 +292,13 @@ void TL_periodic(void)
          break;
 
          case RESET_REASSEMBLY_STRUCTURE:
+         	print_string("RESET_REASSEMBLY_STRUCTURE\r\n");
             J1939_rx_state_machine.PGN = 0;
             J1939_rx_state_machine.dest_addr = 0;
             J1939_rx_state_machine.source_addr = 0;
             J1939_rx_state_machine.packet_number = 0;
-            J1939_rx_state_machine.timer_counter = 0;
+            //J1939_rx_state_machine.timer_counter = 0;
+            Timer_Reset(&J1939_rx_state_machine.t);
             J1939_rx_state_machine.total_packet_number = 0;
             J1939_rx_state_machine.byte_count = 0;
             J1939_rx_message.PGN = 0;
@@ -303,13 +316,18 @@ void TL_periodic(void)
          break;
 
          case CHECK_DATA_PACKET:
+         	print_string("CHECK_DATA_PACKET\r\n");
+         	for(int ijk = 0; ijk<8; ijk++)
+         		print_string("%d ",J1939_rx_pdu.data[ijk]);
+         	print_string("\r\n");
                if (J1939_rx_pdu.source_addr == J1939_rx_state_machine.source_addr &&
                   J1939_rx_pdu.dest_addr == J1939_rx_state_machine.dest_addr)
                {
                   if (J1939_rx_state_machine.packet_number == J1939_rx_pdu.data[0]-1)
                   {
                      J1939_rx_state_machine.status = SAVE_DATA;
-                     J1939_rx_state_machine.timer_counter = 0;
+                     //J1939_rx_state_machine.timer_counter = 0;
+                     Timer_Reset(&J1939_rx_state_machine.t);
                      J1939_rx_pdu.data[0] = 0;
                   }
                   else if(J1939_rx_pdu.data[0] != 0)
@@ -318,18 +336,21 @@ void TL_periodic(void)
                   }
                   else
                   {
+                	  //print_string("%d\r\n",J1939_rx_pdu.data[0] );
                      J1939_rx_state_machine.status = WAIT_FOR_DATA;
                      go_on = FALSE;
                   }
                }
                else
                {
+            	   //print_string("Not Accepted\r\n");
                   J1939_rx_state_machine.status = WAIT_FOR_DATA;
                   go_on = FALSE;
                }
          break;
 
          case SAVE_DATA:
+         	print_string("SAVE_DATA\r\n");
             i=0;
 
             while ((i < 7) && ((J1939_rx_state_machine.packet_number*7+i) <= J1939_rx_state_machine.byte_count))
@@ -361,10 +382,12 @@ void TL_periodic(void)
          break;
 
          case SEND_EOM:
+         	 print_string("SEND_EOM\r\n");
         	 Transmit_J1939_EOM(&J1939_rx_state_machine);
         	 J1939_rx_state_machine.status = FILL_USER_MESSAGE;
         	 break;
          case SEND_CTS:
+         	print_string("SEND_CTS\r\n");
         	 Transmit_J1939_CTS(&J1939_rx_state_machine);
         	 //Start Timer
         	 Timer_Set(&J1939_rx_state_machine.t, RECEIVE_RESP_TIMEOUT);
@@ -374,9 +397,10 @@ void TL_periodic(void)
         	 break;
 
          case FILL_USER_MESSAGE:
+         	print_string("FILL_USER_MESSAGE\r\n");
             J1939_rx_state_machine.status = RESET_REASSEMBLY_STRUCTURE;
-            J1939_rx_state_machine.timer_counter = 0;
-
+            //J1939_rx_state_machine.timer_counter = 0;
+            Timer_Reset(&J1939_rx_state_machine.t);
             // send message up the stack to the Network Management Layer
             Can_DataCallback(&J1939_rx_message);
             //go_on = FALSE;
@@ -400,6 +424,7 @@ void TP_tx_Process(void)
 		   switch(J1939_tx_state_machine.status)
 		   {
 		   case TX_WAIT_FOR_MESSAGE:
+			   print_string("TX_WAIT_FOR_MESSAGE\r\n");
 			   if((J1939_rx_pdu.PGN == TP_CM) )//&& (J1939_rx_pdu.dest_addr == GLOBADDR || J1939_rx_pdu.dest_addr == NODEADDR))
 			   {
 				   if(J1939_rx_pdu.data[0] == TP_CM_CTS)
@@ -422,6 +447,7 @@ void TP_tx_Process(void)
 			   }
 			   break;
 		   case TX_CHECK_CM:
+			   print_string("TX_CHECK_CM\r\n");
 			   if(J1939_tx_state_machine.cts_count)
 			   {
 				  J1939_tx_state_machine.status = TX_SEND_DT;
@@ -437,6 +463,7 @@ void TP_tx_Process(void)
 			   }
 			   break;
 		   case TX_CHECK_TIMER:
+			   print_string("TX_CHECK_TIMER\r\n");
 			   if(Timer_Expired(&J1939_tx_state_machine.t))
 			   {
 				   J1939_tx_state_machine.status = TX_RESET_REASSEMBLY_STRUCTURE;
@@ -449,12 +476,14 @@ void TP_tx_Process(void)
 			   }
 			   break;
 		   case TX_RESET_REASSEMBLY_STRUCTURE:
+			   print_string("TX_RESET_REASSEMBLY_STRUCTURE\r\n");
 	           memset(&TxMsg,0,sizeof(J1939_TX_MESSAGE_T));
 			   memset(&J1939_tx_state_machine,0,sizeof(J1939_TX_STATE_MACHINE_T));
 			   J1939_tx_state_machine.status = TX_WAIT_FOR_MESSAGE;
 			   go_on = FALSE;
 			   break;
 		   case TX_SEND_DT:
+			   print_string("TX_SEND_DT\r\n");
 			   if(J1939_tx_state_machine.cts_count)
 			   {
 				   Transmit_J1939msg(&TxMsg);
@@ -518,7 +547,7 @@ u8 Transmit_J1939msg(J1939_TX_MESSAGE_T *msg)
 			pdu.data[0]			= J1939_rx_state_machine.packet_number;
 			for(int i = 1; i < (NUMBER_PDU_BUFFERS-1); i++)
 			{
-				pdu.data[i]	= msg->data[J1939_rx_state_machine.packet_number*7+i-1];
+				pdu.data[i]	= msg->data[(J1939_rx_state_machine.packet_number-1)*7+i-1];
 			}
 			if(PackFrame(&pdu) == J1939_ERROR)
 				return FALSE;

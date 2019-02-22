@@ -16,6 +16,7 @@ void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef *hcan)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 	CAN_RxHeaderTypeDef RxHeader;
+	memset(&RxHeader, 0, sizeof(CAN_RxHeaderTypeDef));
 	uint8_t data[8];
 	if(HAL_CAN_GetRxMessage(&hcan1, CAN_FILTER_FIFO0, &RxHeader, data) == HAL_OK)
 	{
@@ -94,8 +95,8 @@ static J1939_RTYPE CAN_Receive(u32 id, u8* data, u8 len)
 J1939_RTYPE CAN_Transmit(u32 id, u8* data, u8 len)
 {
 	CAN_TxHeaderTypeDef TxHeader;
-	//TxHeader.ExtId	 = id;
-	TxHeader.StdId	 = 100;
+	memset(&TxHeader, 0, sizeof(CAN_TxHeaderTypeDef));
+	TxHeader.ExtId	 = id;
 	TxHeader.RTR 	 = CAN_RTR_DATA;
 	TxHeader.DLC 	 = len;
 	if(id > 0x7FF)
