@@ -429,6 +429,7 @@ void TP_tx_Process(void)
 			   {
 				   if(J1939_rx_pdu.data[0] == TP_CM_CTS)
 				   {
+					   print_string("CTS Received\r\n");
 	                   J1939_tx_state_machine.cts_count	= J1939_rx_pdu.data[1];
 	                   J1939_tx_state_machine.packet_number = J1939_rx_pdu.data[2];
 	                   J1939_tx_state_machine.status = TX_CHECK_CM;
@@ -436,6 +437,7 @@ void TP_tx_Process(void)
 				   }
 				   else if((J1939_rx_pdu.data[0] == TP_CM_END_OF_MSG_ACK) ||(J1939_rx_pdu.data[0] == TP_CM_CONN_ABORT))
 				   {
+					   print_string("%d Received\r\n", J1939_rx_pdu.data[0]);
 					   J1939_tx_state_machine.status = TX_RESET_REASSEMBLY_STRUCTURE;
 				   }
 				   else
@@ -454,6 +456,7 @@ void TP_tx_Process(void)
 			   }
 			   else
 			   {
+				   print_string("Wait for SomeTime\r\n");
 				 /*TODO SET TIMER
 				  * Timeout Vaue Set to 1050 ms
 				  * */
@@ -466,6 +469,7 @@ void TP_tx_Process(void)
 			   print_string("TX_CHECK_TIMER\r\n");
 			   if(Timer_Expired(&J1939_tx_state_machine.t))
 			   {
+				   print_string("Timer Expired\r\n");
 				   J1939_tx_state_machine.status = TX_RESET_REASSEMBLY_STRUCTURE;
 				   Transmit_J1939_Abort(TxMsg.PGN, ABORT_TIMEOUT, TxMsg.dest_addr);
 			   }
@@ -486,8 +490,9 @@ void TP_tx_Process(void)
 			   print_string("TX_SEND_DT\r\n");
 			   if(J1939_tx_state_machine.cts_count)
 			   {
+				   print_string("Sending Data\r\n");
 				   Transmit_J1939msg(&TxMsg);
-				   J1939_rx_state_machine.packet_number++;
+				   J1939_tx_state_machine.packet_number++;
 				   J1939_tx_state_machine.cts_count--;
 				   //HAL_Delay(10);
 			   }
@@ -545,10 +550,12 @@ u8 Transmit_J1939msg(J1939_TX_MESSAGE_T *msg)
 			pdu.sa      		= NODEADDR;
 			pdu.dlc     		= NUMBER_PDU_BUFFERS;
 			pdu.data[0]			= J1939_rx_state_machine.packet_number;
-			for(int i = 1; i < (NUMBER_PDU_BUFFERS-1); i++)
+			for(int i = 1; i < (NUMBER_PDU_BUFFERS); i++)
 			{
-				pdu.data[i]	= msg->data[(J1939_rx_state_machine.packet_number-1)*7+i-1];
+  			    pdu.data[i]	= msg->data[(J1939_rx_state_machine.packet_number-1)*7+i-1];
+				print_string("%d ",pdu.data[i]);
 			}
+			print_string("\r\n");
 			if(PackFrame(&pdu) == J1939_ERROR)
 				return FALSE;
 			struct timer t;
