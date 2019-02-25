@@ -71,11 +71,10 @@ void TL_process(void)
    J19139_PduTypeDef pdu;
    if(RetrieveFrame(&pdu) == J1939_OK)
    {
-	   /*
 	  print_string("\nDATA: ");
 	  for(int i = 0; i<pdu.dlc; i++)
 		print_string("%d ",pdu.data[i]);
-	  print_string("\r\n");*/
+	  print_string("\r\n");
       if ((pdu.PGN.pgn == TP_CM) || (pdu.PGN.pgn == TP_DT))
       {
          J1939_rx_pdu.PGN = pdu.PGN.pgn;
@@ -389,7 +388,7 @@ void TL_periodic(void)
         	 J1939_rx_state_machine.status = FILL_USER_MESSAGE;
         	 break;
          case SEND_CTS:
-         	print_string("SEND_CTS\r\n");
+         	 print_string("SEND_CTS\r\n");
         	 Transmit_J1939_CTS(&J1939_rx_state_machine);
         	 //Start Timer
         	 Timer_Set(&J1939_rx_state_machine.t, RECEIVE_RESP_TIMEOUT);
