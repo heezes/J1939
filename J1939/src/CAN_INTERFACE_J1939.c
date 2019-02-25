@@ -73,6 +73,10 @@ J1939_RTYPE CAN_DeInit(void)
 
 static J1939_RTYPE CAN_Receive(u32 id, u8* data, u8 len)
 {
+/*	  print_string("\nDATA: ");
+	  for(int i = 0; i<len; i++)
+		print_string("%d ",data[i]);
+	  print_string("\r\n");*/
 	u8 space = (CAN_QUEUE.capacity - CAN_QUEUE.size);
 	if(space >= 13)
 	{
