@@ -648,7 +648,7 @@
   * @{
   */
 #define NOR_StatusTypedef              HAL_NOR_StatusTypeDef
-#define NOR_SUCCESS                    HAL_NOR_STATUS_SUCCESS
+#define NOR_AWS_SUCCESS                    HAL_NOR_STATUS_AWS_SUCCESS
 #define NOR_ONGOING                    HAL_NOR_STATUS_ONGOING
 #define NOR_ERROR                      HAL_NOR_STATUS_ERROR
 #define NOR_TIMEOUT                    HAL_NOR_STATUS_TIMEOUT
@@ -725,7 +725,7 @@
 #define CF_IDENTIFY_CMD               ATA_IDENTIFY_CMD
 
 #define PCCARD_StatusTypedef          HAL_PCCARD_StatusTypeDef
-#define PCCARD_SUCCESS                HAL_PCCARD_STATUS_SUCCESS
+#define PCCARD_AWS_SUCCESS                HAL_PCCARD_STATUS_AWS_SUCCESS
 #define PCCARD_ONGOING                HAL_PCCARD_STATUS_ONGOING
 #define PCCARD_ERROR                  HAL_PCCARD_STATUS_ERROR
 #define PCCARD_TIMEOUT                HAL_PCCARD_STATUS_TIMEOUT

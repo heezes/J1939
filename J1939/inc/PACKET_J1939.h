@@ -6,9 +6,10 @@
 typedef uint32_t PGN_T;
 
 /*PRIVATE DEFINES*/
-#define CAN_BUFFER_SIZE 	40
-#define MAX_CAN_FRAMES 		8
-#define FRAME_HEADER		5
+#define PACKET_RETRIEVE_TIMEOUT	100
+#define CAN_BUFFER_SIZE 		40
+#define MAX_CAN_FRAMES 			8
+#define FRAME_HEADER			5
 
 /*Mask Defines*/
 #define PGN_MASK			0x3FFFF

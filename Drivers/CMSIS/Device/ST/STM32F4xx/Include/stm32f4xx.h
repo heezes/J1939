@@ -214,7 +214,7 @@ typedef enum
 typedef enum 
 {
   ERROR = 0U, 
-  SUCCESS = !ERROR
+  AWS_SUCCESS = !ERROR
 } ErrorStatus;
 
 /**

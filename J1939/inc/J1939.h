@@ -86,8 +86,8 @@ typedef int8_t  s8;
 #define FILL_USER_MESSAGE              12        // State Twelve: The J1939_RX_MESSAGE_T data structure is filled for user application.
 
 /*Tx State Machine*/
-#define TX_WAIT_FOR_MESSAGE				0
-#define TX_CHECK_CM						1
+#define TX_WAIT_FOR_MESSAGE					0
+#define TX_CHECK_CM							1
 #define TX_CHECK_TIMER						2
 #define TX_RESET_REASSEMBLY_STRUCTURE		3
 #define TX_SEND_DT							4

@@ -8,7 +8,7 @@
 #include "stdio.h"
 #include "string.h"
 
-#define TRANSMITTER	0
+#define TRANSMITTER	1
 
 J1939_RX_MESSAGE_T J1939_rx_message;
 J1939_TX_MESSAGE_T TxMsg;
@@ -27,6 +27,7 @@ void Can_DataCallback(J1939_RX_MESSAGE_T *msg)
 
 void App_Init(void)
 {
+	//HAL_Delay(5000);
 	if(TL_init() == J1939_OK)
 	{
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12, GPIO_PIN_SET);
@@ -42,7 +43,7 @@ void App_Init(void)
 	TxMsg.dest_addr		= GLOBADDR;
 	TxMsg.priority		= CM_PRIORITY;
 	for(int i = 0; i < TxMsg.byte_count; i++)
-		TxMsg.data[i]	= i+1;
+		TxMsg.data[i]	= i;
 	if(Transmit_J1939_RTS(&TxMsg) == TRUE)
 		print_string("CAN Frame SENT\r\n");
 	else

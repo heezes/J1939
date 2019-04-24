@@ -280,7 +280,7 @@ typedef struct __CAN_HandleTypeDef
   * @{
   */
 #define CAN_INITSTATUS_FAILED       (0x00000000U)  /*!< CAN initialization failed */
-#define CAN_INITSTATUS_SUCCESS      (0x00000001U)  /*!< CAN initialization OK     */
+#define CAN_INITSTATUS_AWS_SUCCESS      (0x00000001U)  /*!< CAN initialization OK     */
 /**
   * @}
   */

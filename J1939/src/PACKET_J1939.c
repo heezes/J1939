@@ -63,7 +63,7 @@ J1939_RTYPE RetrieveFrame(J19139_PduTypeDef* pkt)
 	t.start 	= 0;
 	u8 len		= 0;
 	u32 id 		= 0;
-	Timer_Set(&t, 100);
+	Timer_Set(&t, PACKET_RETRIEVE_TIMEOUT);
 	while(!Timer_Expired(&t))
 	{
 		if(!isEmpty(&CAN_QUEUE))

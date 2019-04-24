@@ -551,7 +551,7 @@ u8 Transmit_J1939msg(J1939_TX_MESSAGE_T *msg)
 			pdu.data[0]			= J1939_tx_state_machine.packet_number;
 			for(int i = 1; i < (NUMBER_PDU_BUFFERS); i++)
 			{
-				pdu.data[i]	= msg->data[(J1939_rx_state_machine.packet_number-1)*7+i-1];
+				pdu.data[i]	= msg->data[(J1939_tx_state_machine.packet_number-1)*7+i-1];
 				print_string("%d ", pdu.data[i]);
 			}
 			print_string("\r\n");

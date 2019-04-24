@@ -246,7 +246,7 @@
  * </pre>
  * Otherwise the functions return
  * <pre>
- *     ARM_MATH_SUCCESS
+ *     ARM_MATH_AWS_SUCCESS
  * </pre>
  * There is some overhead associated with this matrix size checking.
  * The matrix size checking is enabled via the \#define
@@ -257,7 +257,7 @@
  * and size checking is enabled.  By changing the project settings and
  * undefining this macro size checking is eliminated and the functions
  * run a bit faster.  With size checking disabled the functions always
- * return <code>ARM_MATH_SUCCESS</code>.
+ * return <code>ARM_MATH_AWS_SUCCESS</code>.
  */
 
 /**
@@ -372,7 +372,7 @@ extern "C"
 
   typedef enum
   {
-    ARM_MATH_SUCCESS = 0,                /**< No error */
+    ARM_MATH_AWS_SUCCESS = 0,                /**< No error */
     ARM_MATH_ARGUMENT_ERROR = -1,        /**< One or more arguments are incorrect */
     ARM_MATH_LENGTH_ERROR = -2,          /**< Length of data buffer is incorrect */
     ARM_MATH_SIZE_MISMATCH = -3,         /**< Size of matrices is not compatible with the operation. */
@@ -1129,7 +1129,7 @@ extern "C"
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of samples that are processed at a time.
-   * @return The function returns ARM_MATH_SUCCESS if initialization was successful or ARM_MATH_ARGUMENT_ERROR if
+   * @return The function returns ARM_MATH_AWS_SUCCESS if initialization was successful or ARM_MATH_ARGUMENT_ERROR if
    * <code>numTaps</code> is not a supported value.
    */
   arm_status arm_fir_init_q15(
@@ -1411,7 +1411,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_add_f32(
   const arm_matrix_instance_f32 * pSrcA,
@@ -1425,7 +1425,7 @@ extern "C"
    * @param[in]   pSrcB  points to the second input matrix structure
    * @param[out]  pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_add_q15(
   const arm_matrix_instance_q15 * pSrcA,
@@ -1439,7 +1439,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_add_q31(
   const arm_matrix_instance_q31 * pSrcA,
@@ -1453,7 +1453,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_cmplx_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
@@ -1467,7 +1467,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_cmplx_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
@@ -1482,7 +1482,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_cmplx_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
@@ -1495,7 +1495,7 @@ extern "C"
    * @param[in]  pSrc  points to the input matrix
    * @param[out] pDst  points to the output matrix
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
-   * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_trans_f32(
   const arm_matrix_instance_f32 * pSrc,
@@ -1507,7 +1507,7 @@ extern "C"
    * @param[in]  pSrc  points to the input matrix
    * @param[out] pDst  points to the output matrix
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
-   * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_trans_q15(
   const arm_matrix_instance_q15 * pSrc,
@@ -1519,7 +1519,7 @@ extern "C"
    * @param[in]  pSrc  points to the input matrix
    * @param[out] pDst  points to the output matrix
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
-   * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_trans_q31(
   const arm_matrix_instance_q31 * pSrc,
@@ -1532,7 +1532,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
@@ -1547,7 +1547,7 @@ extern "C"
    * @param[out] pDst    points to output matrix structure
    * @param[in]  pState  points to the array for storing intermediate results
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
@@ -1563,7 +1563,7 @@ extern "C"
    * @param[out] pDst    points to output matrix structure
    * @param[in]  pState  points to the array for storing intermediate results
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_mult_fast_q15(
   const arm_matrix_instance_q15 * pSrcA,
@@ -1578,7 +1578,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
@@ -1592,7 +1592,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_mult_fast_q31(
   const arm_matrix_instance_q31 * pSrcA,
@@ -1606,7 +1606,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_sub_f32(
   const arm_matrix_instance_f32 * pSrcA,
@@ -1620,7 +1620,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_sub_q15(
   const arm_matrix_instance_q15 * pSrcA,
@@ -1634,7 +1634,7 @@ extern "C"
    * @param[in]  pSrcB  points to the second input matrix structure
    * @param[out] pDst   points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_sub_q31(
   const arm_matrix_instance_q31 * pSrcA,
@@ -1648,7 +1648,7 @@ extern "C"
    * @param[in]  scale  scale factor
    * @param[out] pDst   points to the output matrix
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_scale_f32(
   const arm_matrix_instance_f32 * pSrc,
@@ -1663,7 +1663,7 @@ extern "C"
    * @param[in]  shift       number of bits to shift the result by
    * @param[out] pDst        points to output matrix
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_scale_q15(
   const arm_matrix_instance_q15 * pSrc,
@@ -1679,7 +1679,7 @@ extern "C"
    * @param[in]  shift       number of bits to shift the result by
    * @param[out] pDst        points to output matrix structure
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_AWS_SUCCESS</code> based on the outcome of size checking.
    */
   arm_status arm_mat_scale_q31(
   const arm_matrix_instance_q31 * pSrc,
@@ -2271,7 +2271,7 @@ void arm_rfft_fast_f32(
    * @param[in]     N          length of the DCT4.
    * @param[in]     Nby2       half of the length of the DCT4.
    * @param[in]     normalize  normalizing factor.
-   * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported transform length.
+   * @return      arm_status function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported transform length.
    */
   arm_status arm_dct4_init_f32(
   arm_dct4_instance_f32 * S,
@@ -2317,7 +2317,7 @@ void arm_rfft_fast_f32(
    * @param[in]     N          length of the DCT4.
    * @param[in]     Nby2       half of the length of the DCT4.
    * @param[in]     normalize  normalizing factor.
-   * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
+   * @return      arm_status function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
    */
   arm_status arm_dct4_init_q31(
   arm_dct4_instance_q31 * S,
@@ -2363,7 +2363,7 @@ void arm_rfft_fast_f32(
    * @param[in]     N          length of the DCT4.
    * @param[in]     Nby2       half of the length of the DCT4.
    * @param[in]     normalize  normalizing factor.
-   * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
+   * @return      arm_status function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
    */
   arm_status arm_dct4_init_q15(
   arm_dct4_instance_q15 * S,
@@ -3071,7 +3071,7 @@ void arm_rfft_fast_f32(
    * @param[out] pDst        points to the block of output data
    * @param[in]  firstIndex  is the first output sample to start with.
    * @param[in]  numPoints   is the number of output points to be computed.
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_f32(
   float32_t * pSrcA,
@@ -3094,7 +3094,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numPoints   is the number of output points to be computed.
    * @param[in]  pScratch1   points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    * @param[in]  pScratch2   points to scratch buffer of size min(srcALen, srcBLen).
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_opt_q15(
   q15_t * pSrcA,
@@ -3117,7 +3117,7 @@ void arm_rfft_fast_f32(
    * @param[out] pDst        points to the block of output data
    * @param[in]  firstIndex  is the first output sample to start with.
    * @param[in]  numPoints   is the number of output points to be computed.
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q15(
   q15_t * pSrcA,
@@ -3138,7 +3138,7 @@ void arm_rfft_fast_f32(
    * @param[out] pDst        points to the block of output data
    * @param[in]  firstIndex  is the first output sample to start with.
    * @param[in]  numPoints   is the number of output points to be computed.
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_q15(
   q15_t * pSrcA,
@@ -3161,7 +3161,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numPoints   is the number of output points to be computed.
    * @param[in]  pScratch1   points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    * @param[in]  pScratch2   points to scratch buffer of size min(srcALen, srcBLen).
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_opt_q15(
   q15_t * pSrcA,
@@ -3184,7 +3184,7 @@ void arm_rfft_fast_f32(
    * @param[out] pDst        points to the block of output data
    * @param[in]  firstIndex  is the first output sample to start with.
    * @param[in]  numPoints   is the number of output points to be computed.
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q31(
   q31_t * pSrcA,
@@ -3205,7 +3205,7 @@ void arm_rfft_fast_f32(
    * @param[out] pDst        points to the block of output data
    * @param[in]  firstIndex  is the first output sample to start with.
    * @param[in]  numPoints   is the number of output points to be computed.
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_q31(
   q31_t * pSrcA,
@@ -3228,7 +3228,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numPoints   is the number of output points to be computed.
    * @param[in]  pScratch1   points to scratch buffer(of type q15_t) of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    * @param[in]  pScratch2   points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_opt_q7(
   q7_t * pSrcA,
@@ -3251,7 +3251,7 @@ void arm_rfft_fast_f32(
    * @param[out] pDst        points to the block of output data
    * @param[in]  firstIndex  is the first output sample to start with.
    * @param[in]  numPoints   is the number of output points to be computed.
-   * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
+   * @return  Returns either ARM_MATH_AWS_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q7(
   q7_t * pSrcA,
@@ -3319,7 +3319,7 @@ void arm_rfft_fast_f32(
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of input samples to process per call.
-   * @return    The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
+   * @return    The function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * <code>blockSize</code> is not a multiple of <code>M</code>.
    */
   arm_status arm_fir_decimate_init_f32(
@@ -3367,7 +3367,7 @@ void arm_rfft_fast_f32(
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of input samples to process per call.
-   * @return    The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
+   * @return    The function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * <code>blockSize</code> is not a multiple of <code>M</code>.
    */
   arm_status arm_fir_decimate_init_q15(
@@ -3414,7 +3414,7 @@ void arm_rfft_fast_f32(
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of input samples to process per call.
-   * @return    The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
+   * @return    The function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * <code>blockSize</code> is not a multiple of <code>M</code>.
    */
   arm_status arm_fir_decimate_init_q31(
@@ -3482,7 +3482,7 @@ void arm_rfft_fast_f32(
    * @param[in]     pCoeffs    points to the filter coefficient buffer.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of input samples to process per call.
-   * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
+   * @return        The function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>.
    */
   arm_status arm_fir_interpolate_init_q15(
@@ -3516,7 +3516,7 @@ void arm_rfft_fast_f32(
    * @param[in]     pCoeffs    points to the filter coefficient buffer.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of input samples to process per call.
-   * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
+   * @return        The function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>.
    */
   arm_status arm_fir_interpolate_init_q31(
@@ -3550,7 +3550,7 @@ void arm_rfft_fast_f32(
    * @param[in]     pCoeffs    points to the filter coefficient buffer.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of input samples to process per call.
-   * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
+   * @return        The function returns ARM_MATH_AWS_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>.
    */
   arm_status arm_fir_interpolate_init_f32(
@@ -5739,7 +5739,7 @@ void arm_rfft_fast_f32(
    * @brief  Floating-point square root function.
    * @param[in]  in    input value.
    * @param[out] pOut  square root of input value.
-   * @return The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
+   * @return The function returns ARM_MATH_AWS_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
    * <code>in</code> is negative value and returns zero output for negative values.
    */
   static __INLINE arm_status arm_sqrt_f32(
@@ -5761,7 +5761,7 @@ void arm_rfft_fast_f32(
       *pOut = sqrtf(in);
 #endif
 
-      return (ARM_MATH_SUCCESS);
+      return (ARM_MATH_AWS_SUCCESS);
     }
     else
     {
@@ -5775,7 +5775,7 @@ void arm_rfft_fast_f32(
    * @brief Q31 square root function.
    * @param[in]  in    input value.  The range of the input value is [0 +1) or 0x00000000 to 0x7FFFFFFF.
    * @param[out] pOut  square root of input value.
-   * @return The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
+   * @return The function returns ARM_MATH_AWS_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
    * <code>in</code> is negative value and returns zero output for negative values.
    */
   arm_status arm_sqrt_q31(
@@ -5787,7 +5787,7 @@ void arm_rfft_fast_f32(
    * @brief  Q15 square root function.
    * @param[in]  in    input value.  The range of the input value is [0 +1) or 0x0000 to 0x7FFF.
    * @param[out] pOut  square root of input value.
-   * @return The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
+   * @return The function returns ARM_MATH_AWS_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
    * <code>in</code> is negative value and returns zero output for negative values.
    */
   arm_status arm_sqrt_q15(

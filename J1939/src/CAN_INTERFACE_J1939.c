@@ -13,6 +13,7 @@ void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef *hcan)
 {
 
 }
+
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 	CAN_RxHeaderTypeDef RxHeader;
@@ -23,6 +24,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 		CAN_Receive(RxHeader.ExtId, data, (u8)RxHeader.DLC);
 	}
 }
+
 
 /*Private FP*/
 static void CanFilterConfig(void)
@@ -42,7 +44,7 @@ static void CanFilterConfig(void)
 J1939_RTYPE CAN_Init(void)
 {
 	J1939_RTYPE ret = J1939_OK;
-	/*CAN Harware Initialization Implementation*/
+	/*CAN Hardware Initialization Implementation*/
 	hcan1.Instance = CAN1;
 	hcan1.Init.Prescaler = 4;
 	hcan1.Init.Mode = CAN_MODE_NORMAL;
@@ -73,10 +75,12 @@ J1939_RTYPE CAN_DeInit(void)
 
 static J1939_RTYPE CAN_Receive(u32 id, u8* data, u8 len)
 {
-/*	  print_string("\nDATA: ");
+/*
+	  print_string("\nID:%d DATA: ",id);
 	  for(int i = 0; i<len; i++)
 		print_string("%d ",data[i]);
-	  print_string("\r\n");*/
+	  print_string("\r\n");
+*/
 	u8 space = (CAN_QUEUE.capacity - CAN_QUEUE.size);
 	if(space >= 13)
 	{
