@@ -23,12 +23,6 @@ static u8 CAN_BUFFER[CAN_BUFFER_SIZE];
 J1939_RTYPE Interface_Init(void)
 {
 	J1939_RTYPE ret = J1939_OK;
-	/*
-	pkt->PGN.edp_dp = 0; pkt->PGN.pf = 0; pkt->PGN.ps = 0; pkt->PGN.pgn = 0;
-	pkt->dlc 		= 0;
-	pkt->priority 	= 0;
-	pkt->sa 		= 0;
-	memset(pkt->data,0,sizeof(pkt->data));*/
 	create_queue(&CAN_QUEUE,&CAN_BUFFER, sizeof(CAN_BUFFER)/sizeof(u8), CHAR);
 	ret = CAN_Init();
 	return ret;
@@ -44,7 +38,7 @@ TODO: Explore Possibility of Using Enqueue
 J1939_RTYPE PackFrame(J19139_PduTypeDef* pkt)
 {
 	J1939_RTYPE ret = J1939_OK;
-	/*Enqueue*/
+	/*Calculate ID and add data to MAILBOX*/
 	u32 id = 0;
 	if(pkt->PGN.pf < 240)
 		id	|= ((pkt->priority << 26) | ((pkt->PGN.pgn | pkt->PGN.ps)<<8)|pkt->sa);
@@ -58,13 +52,9 @@ TODO: Add frame Identification
 */
 J1939_RTYPE RetrieveFrame(J19139_PduTypeDef* pkt)
 {
-	struct timer t;
-	t.interval 	= 0;
-	t.start 	= 0;
 	u8 len		= 0;
 	u32 id 		= 0;
-	Timer_Set(&t, PACKET_RETRIEVE_TIMEOUT);
-	while(!Timer_Expired(&t))
+	while(1)
 	{
 		if(!isEmpty(&CAN_QUEUE))
 		{
@@ -88,6 +78,8 @@ J1939_RTYPE RetrieveFrame(J19139_PduTypeDef* pkt)
 			}
 			len++;
 		}
+		else
+			break;
 	}
 	if((len-FRAME_HEADER) != pkt->dlc)
 		return J1939_TIMEOUT;/*Timeout Error*/

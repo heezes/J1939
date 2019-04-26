@@ -61,11 +61,11 @@ typedef struct
 //==========================================================================================
 u8 GET_PACKET_NUMBER(u16 byte_count);
 J1939_RTYPE TL_init(void);
-void TL_process(void);
-void TL_periodic(void);
-void TP_tx_Process(void);
-u8 Transmit_J1939_BAM(J1939_TX_MESSAGE_T *msg);
-u8 Transmit_J1939_RTS(J1939_TX_MESSAGE_T *msg);
-u8 Transmit_J1939msg(J1939_TX_MESSAGE_T *msg);
+void TL_process(J1939_RX_PDU_T *J1939_rx_pdu);
+void TL_periodic(J1939_RX_STATE_MACHINE_T *J1939_rx_state_machine, J1939_RX_PDU_T *J1939_rx_pdu, J1939_RX_MESSAGE_T *J1939_rx_message);
+void TP_tx_Process(J1939_TX_STATE_MACHINE_T *J1939_tx_state_machine, J1939_RX_PDU_T *J1939_rx_pdu, J1939_TX_MESSAGE_T *TxMsg);
+u8 Transmit_J1939_BAM(J1939_TX_MESSAGE_T *msg, J1939_TX_STATE_MACHINE_T *J1939_tx_state_machine);
+u8 Transmit_J1939_RTS(J1939_TX_MESSAGE_T *msg, J1939_TX_STATE_MACHINE_T *J1939_tx_state_machine);
+u8 Transmit_J1939msg(J1939_TX_MESSAGE_T *msg, J1939_TX_STATE_MACHINE_T *J1939_tx_state_machine);
 
 #endif

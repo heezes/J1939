@@ -10,6 +10,7 @@
 
 #include "main.h"
 #include "StateMachine.h"
+#include "rsa_ed.h"
 
 
 void App_Init(void);
