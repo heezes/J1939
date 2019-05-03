@@ -8,10 +8,13 @@
 #ifndef _APP_J1939_H_
 #define _APP_J1939_H_
 
+#include <can_task_j1939.h>
 #include "main.h"
-#include "StateMachine.h"
-#include "rsa_ed.h"
 
+
+/*Defines*/
+#define PRIME_NO_1	11
+#define PRIME_NO_2	7919
 
 void App_Init(void);
 void App_Process(void);
