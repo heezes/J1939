@@ -80,7 +80,7 @@ void print_string(const char *format, ...);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
-
+#define TICK_DEFINED	1
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

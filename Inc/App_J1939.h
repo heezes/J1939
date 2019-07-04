@@ -8,7 +8,7 @@
 #ifndef _APP_J1939_H_
 #define _APP_J1939_H_
 
-#include <can_task_j1939.h>
+#include <can_service_task_j1939.h>
 #include "main.h"
 
 

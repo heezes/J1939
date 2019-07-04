@@ -72,14 +72,25 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>J1939</name>
+			<name>j1939</name>
 			<type>2</type>
-			<location>E:/J1939</location>
+			<location>C:/vim-sdk/j1939</location>
 		</link>
 		<link>
-			<name>Utils</name>
+			<name>utils</name>
 			<type>2</type>
-			<location>E:/Utils</location>
+			<location>C:/vim-sdk/utils</location>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1562223065488</id>
+			<name></name>
+			<type>30</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-true-false-nxp</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
