@@ -23,7 +23,7 @@
  *
  * Change log:
  */
-#include <can_interface_j1939.h>
+#include "can_interface_j1939.h"
 #include "main.h"
 
 extern CAN_HandleTypeDef hcan1;
